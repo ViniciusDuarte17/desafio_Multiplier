@@ -1,0 +1,29 @@
+GET http://localhost:3000/categoria
+###
+
+GET http://localhost:3000/categoria/5
+###
+POST http://localhost:3000/categoria/cadastro
+Content-Type: application/json 
+
+{
+    "condigoSlug": "condigoSlunaldjk123f",
+    "titulo": "limpeza",
+    "status": 1
+}
+
+###
+
+PUT http://localhost:3000/categoria/editar/251
+Content-Type: application/json 
+
+{
+    "condigoSlug": "kdsjfkasljaksfs",
+    "titulo": "limpeza",
+    "status": 0
+}
+
+###
+
+DELETE http://localhost:3000/categoria/323
+

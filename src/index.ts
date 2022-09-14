@@ -1,13 +1,14 @@
 import dotenv from "dotenv";
 import {AddressInfo} from "net";
 import express from "express";
+import { categoryRouter } from "./routes/categoryRouter";
 
 dotenv.config();
 const app = express();
 
 app.use(express.json());
 
-app.use;
+app.use("/categoria", categoryRouter);
 
 const server = app.listen(3000, () => {
     if (server) {
