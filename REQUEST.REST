@@ -1,14 +1,16 @@
+// ROTAS DAS CATEGORIAS
+
 GET http://localhost:3000/categoria
 ###
 
-GET http://localhost:3000/categoria/5
+GET http://localhost:3000/categoria/112
 ###
 POST http://localhost:3000/categoria/cadastro
 Content-Type: application/json 
 
 {
-    "condigoSlug": "condigoSlunaldjk123f",
-    "titulo": "limpeza",
+    "condigoSlug": "condigoSlunaldjk123f96",
+    "titulo": "bebidas",
     "status": 1
 }
 
@@ -27,3 +29,38 @@ Content-Type: application/json
 
 DELETE http://localhost:3000/categoria/323
 
+// ....
+
+
+// ROTAS DOS PROTUDOS
+###
+
+GET http://localhost:3000/produtos
+###
+
+GET http://localhost:3000/produtos/407
+
+###
+POST http://localhost:3000/produtos
+Content-Type: application/json 
+
+{
+    "idCategoria": "193",
+    "codigoSKU": "kasnkankjfakf",
+    "nome": "arroz",
+    "descricao": "melhor arroz do mundo",
+    "valor": 21.50,
+    "status": 0
+}
+###
+
+PATCH http://localhost:3000/produtos/407
+Content-Type: application/json 
+
+{
+    "codigoSKU": "kasnkankjfakf",
+    "nome": "arroz leite",
+    "descricao": "melhor arroz de leite do mundo",
+    "valor": 15.50,
+    "status": 1
+}
