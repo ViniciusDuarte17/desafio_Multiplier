@@ -17,3 +17,4 @@ productRouter.get("/", (res, req) => productController.readProductController(res
 productRouter.get("/:id", (res, req) => productController.getProductByidController(res, req));
 productRouter.post("/", (res, req) => productController.createProductController(res,req));
 productRouter.patch("/:id", (res, req) => productController.updateProductController(res,req));
+productRouter.delete("/:id", (res, req) => productController.deleteProductController(res, req));

@@ -5,6 +5,7 @@ GET http://localhost:3000/categoria
 
 GET http://localhost:3000/categoria/112
 ###
+
 POST http://localhost:3000/categoria/cadastro
 Content-Type: application/json 
 
@@ -22,12 +23,12 @@ Content-Type: application/json
 {
     "condigoSlug": "kdsjfkasljaksfs",
     "titulo": "limpeza",
-    "status": 0
+    "status": 1
 }
 
 ###
 
-DELETE http://localhost:3000/categoria/323
+DELETE http://localhost:3000/categoria/193
 
 // ....
 
@@ -53,13 +54,17 @@ Content-Type: application/json
 }
 ###
 
-PATCH http://localhost:3000/produtos/407
+PATCH http://localhost:3000/produtos/215
 Content-Type: application/json 
 
 {
     "codigoSKU": "kasnkankjfakf",
     "nome": "arroz leite",
     "descricao": "melhor arroz de leite do mundo",
-    "valor": 15.50,
+    "valor": 22.50,
     "status": 1
-}
+} 
+
+###
+
+DELETE  http://localhost:3000/produtos/407

@@ -55,4 +55,23 @@ export class ProdutsDatabase extends BaseDatabase implements IProductRepository 
                 status: product.status
             }).from(ProdutsDatabase.TABLE_NAME);    
     }
+
+    public async updateProductById(id: number): Promise<void> {
+        
+        await this.getConnection()
+        .select("*")
+        .where("id_categoria", "=", id)
+        .update({
+            id_categoria: 0
+        })
+        .from(ProdutsDatabase.TABLE_NAME);
+    }
+
+    public async deleteProduct(id: number): Promise<void> {
+
+        await this.getConnection()
+        .delete()
+        .where({id})
+        .from(ProdutsDatabase.TABLE_NAME);
+    }
 }

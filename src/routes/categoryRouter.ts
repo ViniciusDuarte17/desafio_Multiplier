@@ -2,12 +2,15 @@ import express from "express";
 import { CategoryBusiness } from "../business/CategoryBusiness";
 import { CategoryController } from "../controller/CategoryController";
 import { CategoryDatabase } from "../data/CategoryDatabase";
+import { ProdutsDatabase } from "../data/ProductsDatabase";
+
 
 
 export const categoryRouter = express.Router();
 
 const categoryDatabase =  new CategoryDatabase();
-const categoryBusiness = new CategoryBusiness(categoryDatabase);
+const productDatabase = new ProdutsDatabase();
+const categoryBusiness = new CategoryBusiness(categoryDatabase, productDatabase);
 const categoryController = new CategoryController(categoryBusiness);
 
 categoryRouter.get("/", (res, req) => categoryController.getCategoryAll(res, req));
