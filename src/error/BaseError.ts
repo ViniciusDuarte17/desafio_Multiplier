@@ -3,4 +3,12 @@ export class BaseError extends Error {
       super(message);
     }
   }
+export class ErrorMySql extends Error {
+    sqlMessage!: string;
+    
+    constructor(sqlMessage: string, public code: number) {
+      super(sqlMessage);
+    }
+  }
+
   

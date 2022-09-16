@@ -11,7 +11,7 @@ export class ProductBusiness {
     ) { };
 
     public async getProduct(): Promise<IProductDB[]> {
-        try {
+    
             const product: IProductDB[] = await this.productDatabase.readProductAll();
 
             if(product.length <= 0) {
@@ -19,14 +19,10 @@ export class ProductBusiness {
             }
             
             return product;
-
-        } catch (error: any) {
-            throw new BaseError(error.message, error.code);
-        }
     }
 
     public async getProductById(id: number): Promise<IProductDB> {
-        try {
+     
             const productById: IProductDB[] = await this.productDatabase.getProductById(id);
 
             if(productById.length <= 0) {
@@ -35,13 +31,10 @@ export class ProductBusiness {
 
             return productById[0];
             
-        } catch (error: any) {
-            throw new BaseError(error.message, error.code);
-        }
     }
 
     public async createProduct(product: IProductDTO): Promise<void> {
-        try {
+       
             const { idCategoria, codigoSKU, nome, descricao, valor, status } = product;
 
             if (!idCategoria || !codigoSKU || !nome || !descricao || !valor) {
@@ -77,13 +70,10 @@ export class ProductBusiness {
             await this.stockDatabase.addStock(generationStock);
             // SEGUNDO CRIA O STOCK COM VALOR 0
 
-        } catch (error: any) {
-            throw new BaseError(error.message, error.code);
-        }
     }
 
     public async updateProduct(id: number, product: IProductDTO): Promise<void> {
-        try {
+       
             const { codigoSKU, nome, descricao, valor, status } = product;
 
             if(!id) {
@@ -109,10 +99,6 @@ export class ProductBusiness {
                 throw new BaseError("Escolha ao menos um valor para editar!", 422)
             }
 
-            await this.productDatabase.updateProduct(id, product);
-            
-        } catch (error: any) {
-            throw new BaseError(error.message, error.code);
-        }
+            await this.productDatabase.updateProduct(id, product); 
     }
 }
