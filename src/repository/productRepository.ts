@@ -6,4 +6,6 @@ export interface IProductRepository {
     readProductAll(): Promise<IProductDB[]>
     getProductById(id: number): Promise<IProductDB[]>
     updateProduct(id: number, product: IProductDTO): Promise<void>
+    updateProductById(id: number): Promise<void>
+    deleteProduct(id: number): Promise<void>
 }

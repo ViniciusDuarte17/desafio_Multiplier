@@ -1,4 +1,4 @@
-import { BaseError, ErrorMySql } from "../error/BaseError";
+import {  ErrorMySql } from "../error/BaseError";
 import { IStock } from "../model/stock";
 import { IStockRepository } from "../repository/stockRepository";
 import { BaseDatabase } from "./BaseDatabase";
@@ -20,6 +20,20 @@ export class StocksDatabase extends BaseDatabase implements IStockRepository {
                 reserva,
                 status
             }).from(StocksDatabase.TABLE_NAME);
+            
+        } catch (error) {
+            if(error instanceof ErrorMySql)
+            throw new ErrorMySql(error.sqlMessage, error.code)
+        }
+    }
+
+    public async deleteStock(id: number): Promise<void> {
+        try {
+
+            await this.getConnection()
+            .delete()
+            .where({id})
+            .from(StocksDatabase.TABLE_NAME);
             
         } catch (error) {
             if(error instanceof ErrorMySql)

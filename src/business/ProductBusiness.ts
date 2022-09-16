@@ -11,94 +11,112 @@ export class ProductBusiness {
     ) { };
 
     public async getProduct(): Promise<IProductDB[]> {
-    
-            const product: IProductDB[] = await this.productDatabase.readProductAll();
 
-            if(product.length <= 0) {
-                throw new BaseError("Produtos não encontrados!", 404);
-            }
-            
-            return product;
+        const product: IProductDB[] = await this.productDatabase.readProductAll();
+
+        if (product.length <= 0) {
+            throw new BaseError("Produtos não encontrados!", 404);
+        }
+
+        return product;
     }
 
     public async getProductById(id: number): Promise<IProductDB> {
-     
-            const productById: IProductDB[] = await this.productDatabase.getProductById(id);
 
-            if(productById.length <= 0) {
-                throw new BaseError("Produto não encontrado", 404);
-            }
+        const productById: IProductDB[] = await this.productDatabase.getProductById(id);
 
-            return productById[0];
-            
+        if (productById.length <= 0) {
+            throw new BaseError("Produto não encontrado", 404);
+        }
+
+        return productById[0];
+
     }
 
     public async createProduct(product: IProductDTO): Promise<void> {
-       
-            const { idCategoria, codigoSKU, nome, descricao, valor, status } = product;
 
-            if (!idCategoria || !codigoSKU || !nome || !descricao || !valor) {
-                throw new BaseError("É necessário preencher todos os compos!", 400);
-            }
+        const { idCategoria, codigoSKU, nome, descricao, valor, status } = product;
 
-            const id = Math.random() * 10 * (28 + 14);
+        if (!idCategoria || !codigoSKU || !nome || !descricao || !valor) {
+            throw new BaseError("É necessário preencher todos os compos!", 400);
+        }
 
-            const idS = Math.random() * 10 * (35 + 14);
-            // GERERANDO UM ID DIREFERENTE 
+        const id = Math.random() * 10 * (28 + 14);
 
-            const productInput: IProduct = {
-                id,
-                idCategoria,
-                codigoSKU,
-                nome,
-                descricao,
-                valor,
-                status
-            }
+        const idS = Math.random() * 10 * (35 + 14);
+        // GERERANDO UM ID DIREFERENTE 
 
-            const generationStock: IStock = {
-                id: idS,
-                id_produto: id,
-                quantidade: 0,
-                reserva: 0,
-                status: 0
-            }
+        const productInput: IProduct = {
+            id,
+            idCategoria,
+            codigoSKU,
+            nome,
+            descricao,
+            valor,
+            status
+        }
 
-            await this.productDatabase.createProduct(productInput);
-            // PRIMEIRO CRIA O PRODUTO
+        const generationStock: IStock = {
+            id: idS,
+            id_produto: id,
+            quantidade: 0,
+            reserva: 0,
+            status: 0
+        }
 
-            await this.stockDatabase.addStock(generationStock);
-            // SEGUNDO CRIA O STOCK COM VALOR 0
+        await this.productDatabase.createProduct(productInput);
+        // PRIMEIRO CRIA O PRODUTO
+
+        await this.stockDatabase.addStock(generationStock);
+        // SEGUNDO CRIA O STOCK COM VALOR 0
 
     }
 
     public async updateProduct(id: number, product: IProductDTO): Promise<void> {
-       
-            const { codigoSKU, nome, descricao, valor, status } = product;
 
-            if(!id) {
-                throw new BaseError("É necessário informar o id no parms da requição", 422)
-            }
+        const { codigoSKU, nome, descricao, valor, status } = product;
 
-            const getProudct = await this.productDatabase.getProductById(id);
+        if (!id) {
+            throw new BaseError("É necessário informar o id no parms da requição", 422)
+        }
 
-            if(getProudct.length <= 0) {
-                throw new BaseError("produto não encontrado!", 401);
-            }
+        const getProudct = await this.productDatabase.getProductById(id);
 
-            if(
-                codigoSKU === '' ||
-                nome === '' || 
-                descricao === '' ||
-                valor === undefined
-            ) {
-                throw new BaseError("Nenhum dos campos deve estar em branco.", 422)
-            }
+        if (getProudct.length <= 0) {
+            throw new BaseError("produto não encontrado!", 401);
+        }
 
-            if(!codigoSKU && !nome && descricao && !valor) {
-                throw new BaseError("Escolha ao menos um valor para editar!", 422)
-            }
+        if (
+            codigoSKU === '' ||
+            nome === '' ||
+            descricao === '' ||
+            status === undefined ||
+            valor === undefined
+        ) {
+            throw new BaseError("Nenhum dos campos deve estar em branco.", 422)
+        }
 
-            await this.productDatabase.updateProduct(id, product); 
+        if (!codigoSKU && !nome && descricao && !valor) {
+            throw new BaseError("Escolha ao menos um valor para editar!", 422)
+        }
+
+        await this.productDatabase.updateProduct(id, product);
+    }
+
+    public async deleteProduct(id: number): Promise<void> {
+
+        if (!id) {
+            throw new BaseError("É necessário informar o id no parms da requição", 422);
+        }
+
+        const getStockProduct = await this.stockDatabase.getStockByIdProduct(id)
+
+        if (getStockProduct.length <= 0) {
+            throw new BaseError("Sem permisão, verifique se está passando o id corretamente.", 401);
+        }
+
+        await this.stockDatabase.deleteStock(getStockProduct[0].id);
+
+        await this.productDatabase.deleteProduct(id);
     }
 }

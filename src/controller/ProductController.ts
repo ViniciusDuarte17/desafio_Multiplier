@@ -88,4 +88,21 @@ export class ProductController {
             }
         }
     }
+
+    public async deleteProductController(req: Request, res: Response): Promise<void> {
+        try {
+            const id = Number(req.params.id);
+
+            await this.productBusiness.deleteProduct(id);
+
+            res.status(200).send({message: "Produto deletado com sucesso!"});
+            
+        }  catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
+        }
+    }
 }

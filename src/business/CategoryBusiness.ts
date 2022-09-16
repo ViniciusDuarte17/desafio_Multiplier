@@ -3,8 +3,11 @@ import { ICategory, ICategoryDTO } from "../model/category";
 import { ICategoryRepository } from "../repository/categoryRepository";
 
 
+
 export class CategoryBusiness {
-    constructor(private categoryDatabase: ICategoryRepository) { }
+    constructor(
+        private categoryDatabase: ICategoryRepository,
+        ) { }
 
     public async categoryAll(): Promise<ICategory[]> {
 
@@ -59,6 +62,12 @@ export class CategoryBusiness {
             throw new BaseError("É necessário informar o id no parms da requição", 422);
         }
 
+        const verifyCategoria = await this.categoryDatabase.getCategoryById(id);
+
+        if(!verifyCategoria) {
+            throw new BaseError("categoria não encontrada!", 401);
+        }
+
         if (
             category.codigo === '' ||
             category.titulo === ''
@@ -80,12 +89,13 @@ export class CategoryBusiness {
             throw new BaseError("É necessário informar o id da categoria", 422);
         }
 
-        const categorai = await this.categoryDatabase.getCategoryById(id);
+        const category = await this.categoryDatabase.getCategoryById(id);
 
-        if (!categorai) {
+        if (!category) {
             throw new BaseError("categoria não encontrada ou já foi deletada!", 404);
         }
 
         await this.categoryDatabase.deleteCategory(id);
+
     }
 }
