@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CategoryBusiness } from "../business/CategoryBusiness";
+import { BaseError } from "../error/BaseError";
 import { ICategoryDTO } from "../model/category";
 
 
@@ -11,10 +12,14 @@ export class CategoryController {
         try {
 
             const result = await this.categoryBusiness.categoryAll()
-            res.status(200).send( result );
+            res.status(200).send(result);
 
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code)
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -22,10 +27,14 @@ export class CategoryController {
         try {
             const id = Number(req.params.id);
             const result = await this.categoryBusiness.categoryById(id);
-            res.status(200).send( result );
+            res.status(200).send(result);
 
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code)
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -43,15 +52,19 @@ export class CategoryController {
 
             res.status(201).send({ message: "categoria adicionada com sucesso!" });
 
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code)
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
-    public async editCatagory (req: Request, res: Response): Promise<void> {
+    public async editCatagory(req: Request, res: Response): Promise<void> {
         try {
             const id = Number(req.params.id);
-            const {condigoSlug, titulo, status } = req.body;
+            const { condigoSlug, titulo, status } = req.body;
 
             const inputCategory: ICategoryDTO = {
                 codigo: condigoSlug,
@@ -61,10 +74,14 @@ export class CategoryController {
 
             await this.categoryBusiness.editCategory(id, inputCategory);
 
-            res.status(200).send({message: "Categoria editada com sucesso!"});
-            
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code)
+            res.status(200).send({ message: "Categoria editada com sucesso!" });
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -74,10 +91,15 @@ export class CategoryController {
 
             await this.categoryBusiness.deleteCategory(id);
 
-            res.status(200).send({message: "Categoria deletada com sucesso!"});
-            
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code)
+            res.status(200).send({ message: "Categoria deletada com sucesso!" });
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 }

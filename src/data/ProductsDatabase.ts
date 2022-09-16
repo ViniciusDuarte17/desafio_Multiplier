@@ -1,4 +1,3 @@
-import { BaseError } from "../error/BaseError";
 import { IProduct, IProductDB, IProductDTO } from "../model/product";
 import { IProductRepository } from "../repository/productRepository";
 import { BaseDatabase } from "./BaseDatabase";
@@ -9,33 +8,26 @@ export class ProdutsDatabase extends BaseDatabase implements IProductRepository 
 
 
     public async readProductAll(): Promise<IProductDB[]> {
-        try {
+
             const productAll: IProductDB[] = await this.getConnection()
                 .select("*")
                 .from(ProdutsDatabase.TABLE_NAME);
 
-            return productAll;
-        } catch (error: any) {
-            throw new BaseError(error.sqlMessage, error.code);
-        }
+            return productAll; 
     }
 
     public async getProductById(id: number): Promise<IProductDB[]> {
-        try {
+
             const productById: IProductDB[] = await this.getConnection()
                 .select("*")
                 .where({ id })
                 .from(ProdutsDatabase.TABLE_NAME)
 
-            return productById;
-            
-        } catch (error: any) {
-            throw new BaseError(error.sqlMessage, error.code);
-        }
+            return productById;   
     }
 
     public async createProduct(product: IProduct): Promise<void> {
-        try {
+  
             const { id, idCategoria, codigoSKU, nome, descricao, valor, status } = product;
 
             await this.getConnection()
@@ -49,13 +41,10 @@ export class ProdutsDatabase extends BaseDatabase implements IProductRepository 
                     status
                 }).from(ProdutsDatabase.TABLE_NAME);
 
-        } catch (error: any) {
-            throw new BaseError(error.sqlMessage, error.code);
-        }
     }
 
     public async updateProduct(id: number, product: IProductDTO): Promise<void> {
-        try {
+        
             await this.getConnection()
             .where({id})
             .update({
@@ -64,10 +53,6 @@ export class ProdutsDatabase extends BaseDatabase implements IProductRepository 
                 descricao: product.descricao,
                 valor: product.valor,
                 status: product.status
-            }).from(ProdutsDatabase.TABLE_NAME);
-            
-        } catch (error: any) {
-            throw new BaseError(error.sqlMessage, error.code);
-        }
+            }).from(ProdutsDatabase.TABLE_NAME);    
     }
 }

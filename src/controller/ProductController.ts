@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductBusiness } from "../business/ProductBusiness";
+import { BaseError } from "../error/BaseError";
 import { IProductDTO } from "../model/product";
 
 
@@ -9,10 +10,15 @@ export class ProductController {
     public async readProductController(req: Request, res: Response): Promise<void> {
         try {
             const productAll = await this.productBusiness.getProduct();
-            
+
             res.status(200).send(productAll);
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code);
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -22,9 +28,13 @@ export class ProductController {
             const productById = await this.productBusiness.getProductById(id);
 
             res.status(200).send(productById);
-            
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code);
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -45,8 +55,12 @@ export class ProductController {
 
             res.status(201).send({ message: "Produto criado com sucesso!" });
 
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code);
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 
@@ -64,10 +78,14 @@ export class ProductController {
 
             await this.productBusiness.updateProduct(id, inputProduct)
 
-            res.status(200).send({message: "produto editado com sucesso!"})
-            
-        } catch (error: any) {
-            res.send({ error: error.message }).status(error.code);
+            res.status(200).send({ message: "produto editado com sucesso!" })
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
         }
     }
 }
