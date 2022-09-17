@@ -1,3 +1,4 @@
+import { BaseError, ErrorMySql } from "../error/BaseError";
 import { IProduct, IProductDB, IProductDTO } from "../model/product";
 import { IProductRepository } from "../repository/productRepository";
 import { BaseDatabase } from "./BaseDatabase";
@@ -68,10 +69,13 @@ export class ProdutsDatabase extends BaseDatabase implements IProductRepository 
     }
 
     public async deleteProduct(id: number): Promise<void> {
-
-        await this.getConnection()
-        .delete()
-        .where({id})
-        .from(ProdutsDatabase.TABLE_NAME);
+          try {
+            await this.getConnection()
+            .delete()
+            .where({id})
+            .from(ProdutsDatabase.TABLE_NAME);
+          } catch (error: any) {
+            throw new BaseError(error.sqlMessage, error.code);
+          }
     }
 }
