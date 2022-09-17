@@ -7,3 +7,8 @@ export interface IStock {
     reserva: number,
     status?: number
 }
+export interface IStockDTO {
+    quantidade: number,
+    reserva: number,
+    status?: number
+}

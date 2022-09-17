@@ -109,13 +109,11 @@ export class ProductBusiness {
             throw new BaseError("É necessário informar o id no parms da requição", 422);
         }
 
-        const getStockProduct = await this.stockDatabase.getStockByIdProduct(id)
+        const getProduct = await this.productDatabase.getProductById(id);
 
-        if (getStockProduct.length <= 0) {
-            throw new BaseError("Sem permisão, verifique se está passando o id corretamente.", 401);
+        if(getProduct.length <= 0) {
+            throw new BaseError("Produto não encontrado!", 404);
         }
-
-        await this.stockDatabase.deleteStock(getStockProduct[0].id);
 
         await this.productDatabase.deleteProduct(id);
     }

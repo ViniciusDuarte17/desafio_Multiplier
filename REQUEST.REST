@@ -17,11 +17,11 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:3000/categoria/editar/251
+PATCH http://localhost:3000/categoria/editar/193
 Content-Type: application/json 
 
 {
-    "condigoSlug": "kdsjfkasljaksfs",
+    "condigoSlug": "codigoSlugSeguro",
     "titulo": "limpeza",
     "status": 1
 }
@@ -38,18 +38,18 @@ DELETE http://localhost:3000/categoria/193
 GET http://localhost:3000/produtos
 ###
 
-GET http://localhost:3000/produtos/407
+GET http://localhost:3000/produtos/89
 
 ###
 POST http://localhost:3000/produtos
 Content-Type: application/json 
 
 {
-    "idCategoria": "193",
-    "codigoSKU": "kasnkankjfakf",
-    "nome": "arroz",
-    "descricao": "melhor arroz do mundo",
-    "valor": 21.50,
+    "idCategoria": "112",
+    "codigoSKU": "codigo da cotegoria bebida djkjdskfjdkj ",
+    "nome": "suco de limão",
+    "descricao": "melhor suco de limão do mundo",
+    "valor": 9.50,
     "status": 0
 }
 ###
@@ -62,9 +62,24 @@ Content-Type: application/json
     "nome": "arroz leite",
     "descricao": "melhor arroz de leite do mundo",
     "valor": 22.50,
-    "status": 1
+    "status": 0
 } 
 
 ###
 
-DELETE  http://localhost:3000/produtos/407
+DELETE  http://localhost:3000/produtos/215
+
+###
+
+// ROTAS DO ESTOQUE
+GET http://localhost:3000/produtos/categoria/89
+
+###
+PATCH http://localhost:3000/produtos/categoria/89
+Content-Type: application/json 
+
+{
+   "quantidade": 50,
+   "reserva": 100,
+   "status": 1
+} 
