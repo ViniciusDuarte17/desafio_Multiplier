@@ -36,4 +36,19 @@ export class StockBusiness {
 
         await this.stockDatabase.updateStock(id, stock);
     }
+
+    public async deleteStock(id: number): Promise<void> {
+        if(!id) {
+            throw new BaseError("É necessário passar o id", 422);
+        }
+
+        const verifyStock = await this.stockDatabase.getStock(id);
+
+        if(verifyStock.length <= 0) {
+            throw new BaseError("inválido id", 401);
+        }
+
+        await this.stockDatabase.deleteStock(id);
+    }    
+    
 }

@@ -83,3 +83,7 @@ Content-Type: application/json
    "reserva": 100,
    "status": 1
 } 
+
+###
+
+DELETE http://localhost:3000/produtos/categoria/215

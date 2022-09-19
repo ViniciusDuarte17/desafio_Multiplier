@@ -60,7 +60,7 @@ export class StocksDatabase extends BaseDatabase implements IStockRepository {
 
             await this.getConnection()
                 .delete()
-                .where({ id })
+                .where("id_produto", "=", id)
                 .from(StocksDatabase.TABLE_NAME);
 
         } catch (error) {

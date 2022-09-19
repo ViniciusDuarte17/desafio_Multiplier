@@ -26,7 +26,7 @@ export class StockController {
     public async updateStock(req: Request, res: Response): Promise<void> {
         try {
             const id = Number(req.params.id);
-            const {quantidade, reserva, status} = req.body;
+            const { quantidade, reserva, status } = req.body;
 
             const inputStock: IStockDTO = {
                 quantidade,
@@ -36,7 +36,24 @@ export class StockController {
 
             await this.stockBunisess.updateStock(id, inputStock);
 
-            res.status(200).send({message: "Stock editado"});
+            res.status(200).send({ message: "Stock editado" });
+
+        } catch (error) {
+            if (error instanceof BaseError)
+                res.send({ error: error.message }).status(error.code)
+            else {
+                res.status(500).send({ message: "error no servidor" })
+            }
+        }
+    }
+
+    public async deleteStock(req: Request, res: Response): Promise<void> {
+        try {
+            const id = Number(req.params.id);
+
+            await this.stockBunisess.deleteStock(id);
+
+            res.status(200).send({message: "Stock deletado!"});
 
         } catch (error) {
             if (error instanceof BaseError)

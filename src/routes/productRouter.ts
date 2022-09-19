@@ -25,8 +25,8 @@ productRouter.patch("/:id", (res, req) => productController.updateProductControl
 productRouter.delete("/:id", (res, req) => productController.deleteProductController(res, req));
 
 
-// ROTAS DE ESTOQUE
 
+// ROTAS DE ESTOQUE
 productRouter.get("/categoria/:id", (res, req) => stockController.getStockAll(res, req));
 productRouter.patch("/categoria/:id", (res, req) => stockController.updateStock(res, req));
-
+productRouter.delete("/categoria/:id", (res, req) => stockController.deleteStock(res, req));
