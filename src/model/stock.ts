@@ -1,5 +1,4 @@
 
-
 export interface IStock {
     id: number,
     id_produto: number,
