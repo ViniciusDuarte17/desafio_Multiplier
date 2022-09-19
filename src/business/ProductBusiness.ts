@@ -30,7 +30,6 @@ export class ProductBusiness {
         }
 
         return productById[0];
-
     }
 
     public async createProduct(product: IProductDTO): Promise<void> {
@@ -38,7 +37,7 @@ export class ProductBusiness {
         const { idCategoria, codigoSKU, nome, descricao, valor, status } = product;
 
         if (!idCategoria || !codigoSKU || !nome || !descricao || !valor) {
-            throw new BaseError("É necessário preencher todos os compos!", 400);
+            throw new BaseError("É necessário preencher todos os compos!", 422);
         }
 
         const id = Math.random() * 10 * (28 + 14);
@@ -93,11 +92,11 @@ export class ProductBusiness {
             status === undefined ||
             valor === undefined
         ) {
-            throw new BaseError("Nenhum dos campos deve estar em branco.", 422)
+            throw new BaseError("Nenhum dos campos deve estar em branco.", 422);
         }
 
         if (!codigoSKU && !nome && descricao && !valor) {
-            throw new BaseError("Escolha ao menos um valor para editar!", 422)
+            throw new BaseError("Escolha ao menos um valor para editar!", 422);
         }
 
         await this.productDatabase.updateProduct(id, product);

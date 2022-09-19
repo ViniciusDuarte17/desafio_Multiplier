@@ -6,17 +6,54 @@ export class CategoryDatabaseMock implements ICategoryRepository {
     async insertCategory(category: ICategory): Promise<void> {
         console.log("categoria adicionada")
     }
-    getCategoryAll(): Promise<ICategory[]> {
-        throw new Error("Method not implemented.");
+    async getCategoryAll(): Promise<ICategory[]> {
+        const categoryMock: ICategory[] = [
+            {
+                id: 23,
+                codigo: "codigo",
+                titulo: "titulo",
+                status: 0
+            },
+            {
+                id: 24,
+                codigo: "codigo24",
+                titulo: "titulo24",
+                status: 1
+            }
+        ]
+        return categoryMock
     }
-    getCategoryById(id: number): Promise<ICategory> {
-        throw new Error("Method not implemented.");
+    async getCategoryById(id: number): Promise<any> {
+        const categoryMock: ICategory =
+        {
+            id: 23,
+            codigo: "codigo",
+            titulo: "titulo",
+            status: 0
+        }
+        if (categoryMock.id === id) {
+            return categoryMock
+        } else {
+            return undefined
+        }
     }
-    editCategory(id: number, category: ICategoryDTO): Promise<void> {
-        throw new Error("Method not implemented.");
+    async editCategory(id: number, category: ICategoryDTO): Promise<void> {
+
     }
-    deleteCategory(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+    async deleteCategory(id: number): Promise<void> {
+        const category = {
+
+            id: 23,
+            codigo: "codigo",
+            titulo: "titulo",
+            status: 0
+
+        }
+        if(category.id === id) {
+             "deletado com sucesso"
+        } else {
+          "error ao deletar category"
+        }
     }
-    
+
 }
