@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --watchAll",
     "start": "tsc && node --inspect ./build/src/index.js",
-    "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/index.ts"
+    "dev": "tsnd --transpile-only --ignore-watch node_modules ./src/index.ts",
+    "migrations": "tsnd --transpile-only --ignore-watch node_modules ./src/data/Migrations.ts"
   },
   "keywords": [
     "api",

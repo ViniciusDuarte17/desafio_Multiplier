@@ -67,7 +67,7 @@ Content-Type: application/json
 
 ###
 
-DELETE  http://localhost:3000/produtos/215
+DELETE http://localhost:3000/produtos/215
 
 ###
 
